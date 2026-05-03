@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getGigs, getTrendingGigs, getCategories } from '../api';
 import GigCard from '../components/GigCard';
 
