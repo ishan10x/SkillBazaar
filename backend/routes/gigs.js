@@ -118,7 +118,8 @@ router.post('/', verifyToken, isSeller, upload.single('image'), async (req, res)
     let image_url = req.body.image_url || null;
 
     if (req.file) {
-      image_url = `http://localhost:5001/uploads/${req.file.filename}`;
+      const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5001}`;
+      image_url = `${baseUrl}/uploads/${req.file.filename}`;
     }
 
     if (!title || !description || !price || !category_id) {
@@ -144,7 +145,8 @@ router.put('/:id', verifyToken, isSeller, upload.single('image'), async (req, re
     let image_url = req.body.image_url || null;
 
     if (req.file) {
-      image_url = `http://localhost:5001/uploads/${req.file.filename}`;
+      const baseUrl = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5001}`;
+      image_url = `${baseUrl}/uploads/${req.file.filename}`;
     }
 
     // Verify ownership
