@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getGig, createOrder, toggleFavorite } from '../api';
+import { getGig, toggleFavorite } from '../api';
 import { useAuth } from '../context/AuthContext';
 
 export default function GigDetail() {
@@ -27,7 +27,7 @@ export default function GigDetail() {
       })
       .catch(() => navigate('/gigs'))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, navigate]);
 
   const handleRequestOrder = async () => {
     if (!user) { navigate('/login'); return; }

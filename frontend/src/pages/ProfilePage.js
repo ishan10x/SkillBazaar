@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { getMe, updateProfile, getSellerGigs, deleteGig } from '../api';
 import { Link } from 'react-router-dom';
 
@@ -12,11 +12,7 @@ export default function ProfilePage() {
   const [gigs, setGigs] = useState([]);
   const [loadingGigs, setLoadingGigs] = useState(false);
 
-  useEffect(() => {
-    loadProfile();
-  }, []);
-
-  const loadProfile = async () => {
+  const loadProfile = useCallback(async () => {
     try {
       const res = await getMe();
       setProfile(res.data);
@@ -36,7 +32,11 @@ export default function ProfilePage() {
       console.error(err);
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadProfile();
+  }, [loadProfile]);
 
   const loadGigs = async (id) => {
     setLoadingGigs(true);

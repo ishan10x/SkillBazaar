@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getOrders, updateOrderStatus, createReview } from '../api';
@@ -17,15 +17,15 @@ export default function OrdersPage() {
   const [reviewForm, setReviewForm] = useState({ rating: 5, comment: '' });
   const [reviewMsg, setReviewMsg] = useState('');
 
-  const loadOrders = () => {
+  const loadOrders = useCallback(() => {
     setLoading(true);
     getOrders(view)
       .then(r => setOrders(r.data))
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }, [view]);
 
-  useEffect(() => { loadOrders(); }, [view]);
+  useEffect(() => { loadOrders(); }, [loadOrders]);
 
   const handleStatusChange = async (orderId, status) => {
     try {

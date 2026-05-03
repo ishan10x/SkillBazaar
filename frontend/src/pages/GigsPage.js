@@ -23,8 +23,7 @@ function removeRecentSearch(term) {
 }
 
 export default function GigsPage() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [gigs, setGigs] = useState([]);
   const [trendingGigs, setTrendingGigs] = useState([]);
   const [categories, setCategories] = useState([]);

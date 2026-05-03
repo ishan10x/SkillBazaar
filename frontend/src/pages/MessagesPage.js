@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { getConversations, getMessages, sendMessage, getSellerGigs, sendOffer, getOffers, acceptOffer } from '../api';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { getConversations, getMessages, sendMessage, getSellerGigs, sendOffer, getOffers } from '../api';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -70,8 +70,10 @@ export default function MessagesPage() {
   }, [activeConv, user.id, user.role]);
 
   // Combine messages and offers, sort by created_at
-  const combinedStream = [...messages, ...offers.map(o => ({ ...o, isOffer: true }))];
-  combinedStream.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  const combinedStream = useMemo(() => {
+    const stream = [...messages, ...offers.map(o => ({ ...o, isOffer: true }))];
+    return stream.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  }, [messages, offers]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
